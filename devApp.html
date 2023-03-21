@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="UTF-8">
+    <title>Blackjack Game</title>
+    <link rel="stylesheet" type="text/css" href="style.css">
+  </head>
+  <body>
+    <h1 id = "game-title">Blackjack Game</h1>
+    <button id = "show-deck" onclick ="showDeck()">Whole deck is here</button>
+    <div id = "suit-type">
+      <button id ="suit-but" onclick="showClubs()">Clubs suit</button>
+      <button id ="suit-but" onclick="showSpades()">Spades suit</button>
+      <button id ="suit-but" onclick="showDiamonds()">Diamonds suit</button>
+      <button id ="suit-but" onclick="showHearts()">Hearts suit</button>
+    </div>
+    <div id="game-container">
+      <div id="dealer-hand">Dealer Cards
+        <!-- Dealer's card is shown right here -->
+      </div>
+      <div id="user-hand">Player Cards
+        <!-- Player's card is shown right here -->
+      <button id="hit-button" onclick="getRandCard()">Hit</button>
+      <button id="stay-button">Stay</button>
+      <button id="deal-button">Deal</button>
+      <button id="start-button" onclick="iniCard()">Start the game</button>
+      </div>
+    </div>
+    <!--<button id = "test" onclick = "test()">Test value of cards</button> -->
+    <script src="deck.js"></script>
+    <script src="button.js"></script>
+  </body>
+</html>
