@@ -29,6 +29,7 @@ function cardValue(value) {
   return value;
 }
 
+// assign value to each cards
 function linkValue() {
   let deck = cardImg();
   let cards = [];
@@ -41,7 +42,6 @@ function linkValue() {
     cards.push(card);
   }
   return cards;
-  console.log(cards);
 }
 
 function makeDeck(parentElement) {
@@ -59,6 +59,7 @@ function makeDeck(parentElement) {
   }
 }
 
+// Test if the deck exists
 function showDeck() {
   let parentElement = document.body;
   makeDeck(parentElement);
@@ -90,19 +91,68 @@ function getRandCard(parentElement = document.getElementById("hit-button")) {
     let cardElement = document.createElement("img");
     cardElement.id = "card-type";
     cardElement.src = newCard;
-    parentElement.appendChild(cardElement);
+    return cardElement;
   }
 }
 
+// Button "Hit"
+function hitCard() {
+  let cardElement = getRandCard();
+  document.getElementById('hit-button').appendChild(cardElement);
+}
 
-function iniCard() {
+function hitButton() {
+  hitCard();
+}
+
+// Button "Stay"
+function stayCard() {
+  document.getElementById("hit-button").style.display ="none";
+}
+
+function uStarterCard() {
   for (let i = 0; i < 2; i++) {
-    dealerCard.push(getRandCard());
-    userCard.push(getRandCard());
+    let cardElement = getRandCard();
+    userCard.push(cardElement);
+    document.getElementById("user-hand").appendChild(cardElement);
   }
 }
 
+function dStarterCard() {
+  for (let i = 0; i < 2; i++) {
+    let cardElement = getRandCard();
+    dealerCard.push(cardElement);
+    document.getElementById("dealer-hand").appendChild(cardElement);
+  }
+}
 
+// Button "Start the game"
+function startGame() {
+  uStarterCard();
+  dStarterCard();
+
+  const userCardsElement = document.getElementById("user-hand");
+  userCardsElement.classList.add("user-cards");
+  for (let card of userCard) {
+    const cardElement = document.createElement("div");
+    cardElement.textContent = card;
+  }
+
+  const dealerCardsElement = document.getElementById("dealer-hand");
+  dealerCardsElement.classList.add("dealer-cards");
+  for (let card of dealerCard) {
+    const cardElement = document.createElement("div");
+    cardElement.textContent = card;
+  }
+  //Hide the button after getting the starter cards
+  document.getElementById("start-button").style.display ="none";
+}
+
+function reset() {
+  document.getElementById("start-button").style.display ="block";
+}
+
+// Below are functions to test the game
 //This funciton is to test if the cardValue function is working
 /*
 function test() {

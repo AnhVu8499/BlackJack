@@ -20,12 +20,13 @@
       </div>
       <div id="user-hand">Player Cards
         <!-- Player's card is shown right here -->
-      <button id="hit-button" onclick="getRandCard()">Hit</button>
-      <button id="stay-button">Stay</button>
-      <button id="deal-button">Deal</button>
-      <button id="start-button" onclick="iniCard()">Start the game</button>
       </div>
+      <button id="hit-button" onclick="hitButton()">Hit</button>
+      <button id="stay-button" onclick="stayCard()">Stay</button>
+      <button id="start-button" onclick="startGame()">Start the game</button>
+      <button id="start-button" onclick="reset()">Reset the game</button>
     </div>
+    <div id="background-poker"></div>
     <!--<button id = "test" onclick = "test()">Test value of cards</button> -->
     <script src="deck.js"></script>
     <script src="button.js"></script>
