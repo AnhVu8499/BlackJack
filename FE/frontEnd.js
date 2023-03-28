@@ -9,6 +9,6 @@ function realTime() {
 setInterval(realTime, 1000);
 
 function openPopup() {
-    const popup = window.open("http://localhost:5500/", "Popup", "width=700,height=700");
+    const popup = window.open("http://localhost:3000/", "Popup", "width=700,height=700");
     popup.focus();
   }

@@ -80,13 +80,17 @@ function randCard() {
 }
 
 let hand = [];
+let numCardsDrawn = 0;
 
-function getRandCard(parentElement = document.getElementById("hit-button")) {
-  if (hand.length < 52) { // if there are still cards left in the deck
+function getRandCard() {
+  if (numCardsDrawn < 52) { // if there are still cards left in the deck
     let newCard;
     do {
       newCard = randCard();
     } while (hand.includes(newCard)); 
+
+    hand.push(newCard); // add the new card to the hand
+    numCardsDrawn++; // increment the number of cards drawn
 
     let cardElement = document.createElement("img");
     cardElement.id = "card-type";
@@ -95,14 +99,31 @@ function getRandCard(parentElement = document.getElementById("hit-button")) {
   }
 }
 
-// Button "Hit"
-function hitCard() {
-  let cardElement = getRandCard();
-  document.getElementById('hit-button').appendChild(cardElement);
-}
 
-function hitButton() {
-  hitCard();
+// let hand = [];
+
+// function getRandCard(/*parentElement = document.getElementById("hit-button")*/) {
+//   if (hand.length < 52) { // if there are still cards left in the deck
+//     let newCard;
+//     do {
+//       newCard = randCard();
+//     } while (hand.includes(newCard)); 
+
+//     let cardElement = document.createElement("img");
+//     cardElement.id = "card-type";
+//     cardElement.src = newCard;
+//     return cardElement;
+//   }
+// }
+
+// Button "Hit"
+let hitClickCount = 0;
+function hitCard() {
+  hitClickCount++;
+  let cardElement = getRandCard();
+  document.getElementById('user-hand').appendChild(cardElement);
+  if (hitClickCount === 3) 
+    document.getElementById('hit-button').remove();
 }
 
 // Button "Stay"
@@ -127,7 +148,9 @@ function dStarterCard() {
 }
 
 // Button "Start the game"
+let startClickCount = 0;
 function startGame() {
+  startClickCount++;
   uStarterCard();
   dStarterCard();
 
@@ -144,8 +167,12 @@ function startGame() {
     const cardElement = document.createElement("div");
     cardElement.textContent = card;
   }
-  //Hide the button after getting the starter cards
+  // Hide the button after getting the starter cards
   document.getElementById("start-button").style.display ="none";
+  // Hide the hit button before the game start
+  if (startClickCount === 1) {
+    document.getElementById("hit-button").style.display ="none";
+  }
 }
 
 function reset() {
