@@ -3,6 +3,18 @@ const values = ["ace",2,3,4,5,6,7,8,9,10,"jack","queen","king"];
 let deck = [];
 let userCard = [];
 let dealerCard = [];  
+let hitClickCount = 0;
+let startClickCount = 0;
+
+// These feafures will (not) be displayed when loaded 
+window.addEventListener('load', function() {  
+  document.getElementById('suit-type').style.display = 'none';
+  document.getElementById('hit-button').style.display = 'none';
+  document.getElementById('stay-button').style.display = 'none';
+  document.getElementById('reset-button').style.display = 'none';
+  document.getElementById('dealer-hand').style.display = 'none';
+  document.getElementById('user-hand').style.display = 'none';
+});
 
 function cardImg() {
   let deck = []; //erase the deck before using
@@ -59,12 +71,6 @@ function makeDeck(parentElement) {
   }
 }
 
-// Test if the deck exists
-function showDeck() {
-  let parentElement = document.body;
-  makeDeck(parentElement);
-}
-
 //
 //
 //
@@ -99,38 +105,6 @@ function getRandCard() {
   }
 }
 
-
-// let hand = [];
-
-// function getRandCard(/*parentElement = document.getElementById("hit-button")*/) {
-//   if (hand.length < 52) { // if there are still cards left in the deck
-//     let newCard;
-//     do {
-//       newCard = randCard();
-//     } while (hand.includes(newCard)); 
-
-//     let cardElement = document.createElement("img");
-//     cardElement.id = "card-type";
-//     cardElement.src = newCard;
-//     return cardElement;
-//   }
-// }
-
-// Button "Hit"
-let hitClickCount = 0;
-function hitCard() {
-  hitClickCount++;
-  let cardElement = getRandCard();
-  document.getElementById('user-hand').appendChild(cardElement);
-  if (hitClickCount === 3) 
-    document.getElementById('hit-button').remove();
-}
-
-// Button "Stay"
-function stayCard() {
-  document.getElementById("hit-button").style.display ="none";
-}
-
 function uStarterCard() {
   for (let i = 0; i < 2; i++) {
     let cardElement = getRandCard();
@@ -148,9 +122,17 @@ function dStarterCard() {
 }
 
 // Button "Start the game"
-let startClickCount = 0;
 function startGame() {
+  document.querySelectorAll('img').forEach(function(card) {
+    card.remove();
+  }); // remove all cards before use
   startClickCount++;
+  document.getElementById('hit-button').style.display = 'block';
+  document.getElementById('stay-button').style.display = 'block';
+  document.getElementById('reset-button').style.display = 'block';
+  document.getElementById('dealer-hand').style.display = 'block';
+  document.getElementById('user-hand').style.display = 'block';
+
   uStarterCard();
   dStarterCard();
 
@@ -169,15 +151,37 @@ function startGame() {
   }
   // Hide the button after getting the starter cards
   document.getElementById("start-button").style.display ="none";
-  // Hide the hit button before the game start
-  if (startClickCount === 1) {
-    document.getElementById("hit-button").style.display ="none";
-  }
 }
 
 function reset() {
+  document.querySelectorAll('img').forEach(function(card) {
+    card.remove();
+  }); // remove all cards before use
   document.getElementById("start-button").style.display ="block";
+  document.getElementById("reset-button").style.display ="none";
+  hitClickCount = 0;
+  startClickCount = 0;
 }
+
+// Button "Stay"
+function stayCard() {
+  document.getElementById("hit-button").style.display ="none";
+  document.getElementById("stay-button").style.display ="none";
+}
+
+// Button "Hit"
+function hitCard() {
+  hitBut = document.getElementById('hit-button');
+  hitClickCount++;
+  let cardElement = getRandCard();
+  document.getElementById('user-hand').appendChild(cardElement);
+  if (hitClickCount === 3){
+    hitBut.style.display ="none";
+    // also hide the stay button when hit 3 times
+    document.getElementById('stay-button').style.display ="none";
+  }
+}
+
 
 // Below are functions to test the game
 //This funciton is to test if the cardValue function is working
@@ -194,6 +198,12 @@ function test() {
   }
 }
 */
+
+// Test if the deck exists
+function showDeck() {
+  let parentElement = document.body;
+  makeDeck(parentElement);
+}
 
 function showClubs() {
   showDeck();
