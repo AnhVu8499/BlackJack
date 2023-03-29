@@ -108,6 +108,15 @@ body {
   margin: 10px;
 }
 
+#win-condition {
+  z-index: 1;
+  position: absolute;
+  top: 250px;
+  font-size: 50px;
+  font-weight: bold;
+  color:rgb(156, 61, 61);
+}
+
 #test {
   position: absolute;
   bottom: 2%;
