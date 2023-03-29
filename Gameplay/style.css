@@ -111,7 +111,16 @@ body {
 #win-condition {
   z-index: 1;
   position: absolute;
-  top: 250px;
+  bottom: 100px;
+  font-size: 50px;
+  font-weight: bold;
+  color:rgb(156, 61, 61);
+}
+
+#dealer-card {
+  right:500px;
+  position: absolute;
+  bottom: 330px;
   font-size: 50px;
   font-weight: bold;
   color:rgb(156, 61, 61);

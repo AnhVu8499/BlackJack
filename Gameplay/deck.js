@@ -14,7 +14,7 @@ window.addEventListener('load', function() {
   document.getElementById('reset-button').style.display = 'none';
   document.getElementById('dealer-hand').style.display = 'none';
   document.getElementById('user-hand').style.display = 'none';
-  //document.getElementById('win-condition').style.display ='none';
+  document.getElementById('win-condition').style.display ='none';
 });
 
 function cardArr() {
@@ -72,7 +72,7 @@ function makeDeck(parentElement) {
       cardElement.src = `Deck/PNG-cards-1.3/${deck[i].name}_of_${suit}.png`;
       cardElement.dataset.value = cards[i].value; // Assign value to card image
       parentElement.appendChild(cardElement);
-      document.getElementById('win-condition').textContent = cardElement.dataset.value;
+      //document.getElementById('win-condition').textContent = cardElement.dataset.value;
     }
   }
   // for (let card of deck) {
@@ -156,6 +156,7 @@ function startGame() {
 
   uStarterCard();
   dStarterCard();
+  countValue();
 
   const userCardsElement = document.getElementById("user-hand");
   userCardsElement.classList.add("user-cards");
@@ -198,9 +199,9 @@ function hitCard() {
   let cardElement = getRandCard();
   //hand.push(cardElement);
   document.getElementById('user-hand').appendChild(cardElement);
+  countValue();
   if (hitClickCount === 3){
     hitBut.style.display ="none";
-    countValue();
     // also hide the stay button when hit 3 times
     document.getElementById('stay-button').style.display ="none";
   }
@@ -212,14 +213,20 @@ function countValue() {
   let drawHand = hand.slice(4);
   let userValue = 0;
   let drawValue = 0;
+  let dealerValue = 0;
   for (let hCard of userHand) {
     userValue += hCard.value;
   }
   for (let hCard of drawHand) {
     drawValue += hCard.value;
   }
+  for (let hCard of dealerHand) {
+    dealerValue += hCard.value;
+  }
   handValue = userValue + drawValue;
+  document.getElementById('win-condition').style.display ='block';
   document.getElementById('win-condition').textContent = handValue;
+  document.getElementById('dealer-card').textContent = dealerValue;
   // if (handValue === 0) 
   //   document.getElementById('win-condition').style.display = 'block';
   // else
