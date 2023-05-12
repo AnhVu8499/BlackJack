@@ -8,7 +8,16 @@ function realTime() {
 }
 setInterval(realTime, 1000);
 
-function openPopup() {
-    const popup = window.open("http://localhost:3000/", "Popup", "width=700,height=700");
-    popup.focus();
-  }
+function openLogin() {
+    //const popup = window.open("https://dev5693.deawie29ynm2d.amplifyapp.com/", "Popup", "width=700,height=700");
+    const popup = window.open("http://localhost:3000/", "Popup", "width=800,height=1200");
+    popup.focus(); 
+}
+
+function openRegister() {
+    const popup = window.open("http://localhost:3000/signup", "Popup", "width=1000,height=1100");
+    popup.focus(); 
+}
+
+
+  window.opener.location.href = "http://127.0.0.1:5501/Gameplay/devApp.html";

@@ -41,6 +41,7 @@ body {
 
 #show-deck, #suit-but, #hit-button, #stay-button, #start-button, #reset-button {
   z-index: 1;
+  font-size:30px;
 }
 
 #game-title {
@@ -120,7 +121,7 @@ body {
 #dealer-card {
   right:500px;
   position: absolute;
-  bottom: 330px;
+  top: 350px;
   font-size: 50px;
   font-weight: bold;
   color:rgb(156, 61, 61);

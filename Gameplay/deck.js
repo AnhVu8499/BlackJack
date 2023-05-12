@@ -5,10 +5,12 @@ let userCard = [];
 let dealerCard = [];  
 let hitClickCount = 0;
 let startClickCount = 0;
+let finalValue = 0;
+let finalBotValue = 0;
 
 // These feafures will (not) be displayed when loaded 
 window.addEventListener('load', function() {  
-  //document.getElementById('suit-type').style.display = 'none';
+  document.getElementById('suit-type').style.display = 'none';
   document.getElementById('hit-button').style.display = 'none';
   document.getElementById('stay-button').style.display = 'none';
   document.getElementById('reset-button').style.display = 'none';
@@ -171,8 +173,10 @@ function startGame() {
     const cardElement = document.createElement("div");
     cardElement.textContent = card;
   }
+
   // Hide the button after getting the starter cards
   document.getElementById("start-button").style.display ="none";
+  document.getElementById('suit-type').style.display = 'none';
 }
 
 function reset() {
@@ -181,17 +185,32 @@ function reset() {
   }); // remove all cards before use
   document.getElementById("start-button").style.display ="block";
   document.getElementById("reset-button").style.display ="none";
+  document.getElementById("hit-button").style.display ="none";
+  document.getElementById("stay-button").style.display ="none";
+  document.getElementById('win-condition').style.display = 'none';
+  document.getElementById('dealer-card').style.display = 'none';
+  // set all the values back to 0
   hitClickCount = 0;
   startClickCount = 0;
   hand = [];
   numCardsDrawn = 0;
+  handValue = 0;
+  dealerValue = 0;
+  userValue = 0;
+  drawValue = 0;
 }
 
 // Button "Stay"
 function stayCard() {
   document.getElementById("hit-button").style.display ="none";
   document.getElementById("stay-button").style.display ="none";
+  if (finalBotValue < 15) {
+    dealerDrawCard();
+    countValue();
+  }
+  isWin(); 
 }
+
 // Button "Hit"
 function hitCard() {
   hitBut = document.getElementById('hit-button');
@@ -200,20 +219,30 @@ function hitCard() {
   //hand.push(cardElement);
   document.getElementById('user-hand').appendChild(cardElement);
   countValue();
-  if (hitClickCount === 3){
+  if (hitClickCount === 3 || isBusted()){
     hitBut.style.display ="none";
     // also hide the stay button when hit 3 times
     document.getElementById('stay-button').style.display ="none";
+    isWin();
   }
 }
-let handValue = 0;
+
+function dealerDrawCard() {
+  let cardElement = getRandCard();
+  for (let i = 0; i < 3; i++) {
+    document.getElementById('dealer-hand').appendChild(cardElement);
+    dealerCard.push(cardElement);
+  }
+}
+
 function countValue() {
-  let userHand = hand.slice(0,2);
-  let dealerHand = hand.slice(2,4);
-  let drawHand = hand.slice(4);
+  let handValue = 0;
   let userValue = 0;
   let drawValue = 0;
   let dealerValue = 0;
+  let userHand = hand.slice(0,2);
+  let dealerHand = hand.slice(2,4);
+  let drawHand = hand.slice(4);
   for (let hCard of userHand) {
     userValue += hCard.value;
   }
@@ -223,8 +252,17 @@ function countValue() {
   for (let hCard of dealerHand) {
     dealerValue += hCard.value;
   }
+  // Check for Black Jack
+  if (userHand === 21) {
+    finalValue > finalBotValue;
+    finalValue < 22;
+    isWin();
+  }
   handValue = userValue + drawValue;
+  finalValue = handValue;
+  finalBotValue = dealerValue;
   document.getElementById('win-condition').style.display ='block';
+  document.getElementById('dealer-card').style.display ='block';
   document.getElementById('win-condition').textContent = handValue;
   document.getElementById('dealer-card').textContent = dealerValue;
   // if (handValue === 0) 
@@ -233,6 +271,21 @@ function countValue() {
   //   document.getElementById('win-condition').style.display = 'block';
   //document.getElementById('win-condition').textContent = handValue;
 }
+
+function isBusted() {
+  if (finalValue >= 22)
+    return true;
+}
+
+function isWin() {
+  if ((finalValue > finalBotValue) && (finalValue < 22)) 
+    document.getElementById('win-condition').textContent ="You Win!";
+  else if ((finalValue < finalBotValue) || (finalValue > 22)) 
+    document.getElementById('win-condition').textContent ="You Lose!";
+  else 
+    document.getElementById('win-condition').textContent ="Draw!";
+}
+
 
 
 // Below are functions to test the game
